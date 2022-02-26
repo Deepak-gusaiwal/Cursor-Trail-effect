@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cursor-trail</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .container{
+        width: 100vw;
+        height: 100vh;
+        background-color: rgb(238, 229, 238);
+    }
+
+    /* .main-cursor{
+    position: absolute;
+        width: 30px;
+        height: 30px;
+        border-radius: 49%;
+        background-color: var(--blue);
+        background-color: rgb(255, 0, 0);
+        transition: 50ms;
+        transform: translate(-50%,-50%);
+        pointer-events: none;
+        mix-blend-mode:exclusion;
+    } */
+
+
+    .trail{
+        position: absolute;
+        width: 20px;
+        height:20px;
+        border-radius: 50%;
+        background-image: linear-gradient(to bottom right,red, rgb(253, 51, 51),rgb(255, 123, 123));
+        animation: trail 1s linear forwards;
+    }
+    @keyframes trail{
+        0%{
+            transform: scale(0);
+        }10%{
+            transform: scale(1) translateY(0px);
+            opacity: 1;
+        }100%{
+            transform: scale(0) translateY(50px);
+            opacity: 0;
+        }
+    }
+</style>
+<body>
+    <div class="container"></div>
+    <div class="main-cursor"></div>
+
+    <script>
+// main cursor started
+// ********************main cursor started ***********************
+// let mainCursor = document.querySelector('.main-cursor');
+//        document.addEventListener('mousemove',(e)=>{
+//         //    console.log("x = "+e.pageX ,'AND',"x = "+e.pageY);
+//            let x = e.pageX;
+//            let y = e.pageY;
+//            mainCursor.style.left = x +'px';
+//            mainCursor.style.top = y+ 'px';
+//        });
+       
+// ***************************main cursor end************************
+
+        let body = document.querySelector('body')
+        document.addEventListener('mousemove',(e)=>{
+            let cursorelem = document.createElement('div');
+            cursorelem.setAttribute('class','trail');
+            cursorelem.setAttribute('style',`left:${e.pageX}px; top:${e.pageY}px;`);
+            body.appendChild(cursorelem);
+            // setTimeout(() => {
+            //     cursorelem.remove();
+            // }, 1000);
+            cursorelem.onanimationend=()=>{
+                cursorelem.remove();
+            }
+        });
+    </script>
+</body>
+</html>
